@@ -1,0 +1,31 @@
+;2NrGcd(x,y)={0 , x and y not numbers
+;            {y , x is not a number
+;            {x , y is not a number
+;	     {x , y=0
+;            {2NrGcd(y,x mod y) , otherwise	
+
+(defun 2NrGcd (x y)
+    (cond
+        ((and (not (numberp x)) (not(numberp y))) nil)
+        ((not(numberp x)) y)
+        ((not(numberp y)) x)
+        ((equal y 0) x)
+        (T (2NrGcd y (mod x y)))
+        )
+    )
+
+
+;listGcd(l1..ln)={l1 ,n=0
+;	         {2NrGcd(listGcd(l1),listGcd(l2..ln)) , l1 is a list
+;	         {2NrGcd(l1,listGcd(l2..ln)) ,otherwise
+
+
+(defun listGcd (l)
+    (cond
+        (( and (atom (car l))(null (cdr l))) (car l))
+        ((listp(car l))(2NrGcd(listGcd(car l))(listGcd(cdr l))))
+        (T (2NrGcd (car l)(listGcd(cdr l))))
+        )
+    )
+
+(print (listGcd '(12 (6(A (B C)) 4 A))))

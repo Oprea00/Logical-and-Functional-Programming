@@ -1,0 +1,44 @@
+;                   {[], n=0
+;deleteE(l1...ln,e)={deleteE(l2...ln,e) ,e=l1
+;                   {l1 U deleteE(l2..ln,e) ,e!=l1
+;                   {deleteE(l1,e) U deleteE(l2..ln,e) ,l1=list
+
+(defun deleteE (l e)
+    (cond
+        ((null l) nil)
+        ((equal (car l) e) (deleteE (cdr l) e))
+        ((listp (car l)) (cons (deleteE (car l) e) (deleteE(cdr l) e)))
+        (t(cons (car l) (deleteE (cdr l) e)))
+        )
+    )
+
+(print (deleteE '(1 2 (3 2) 4 2 (2)) 2))
+
+
+
+
+;problema 2
+(defun myReverse (l)
+    (cond
+        ((null l) nil)
+        (t(append(myReverse(cdr l)) (list(car l)))
+          )
+        )
+    )
+
+(print (myReverse '(1 23 4)))
+
+
+(defun multiply (l k c)
+    (cond
+        ((null l) l)
+        ((<(*(car l) k) 10) (append (multiply(cdr l) k c) (list (+(* (car l) k) c))))
+        (t (append(multiply(cdr l) k c) (list (+(* (car l) k) c))))
+        )
+    )
+        
+        
+(defun main (l k)
+    (multiply (myReverse l) k 0))
+        
+(print ( main '(1 2 7) 3))    

@@ -1,0 +1,69 @@
+---delete an element from a list-------
+( defun deleteE (l e)
+    (cond
+        ((null l) nil)
+        ((listp (car l))(cons(deleteE (car l) e) (deleteE (cdr l) e)))
+        ((equal (car l) e)(deleteE (cdr l) e))
+        (t(cons(car l) (deleteE (cdr l) e)))
+        )
+    )
+
+(print (deleteE '( 1 2 4 2 2) 2))
+
+
+
+-----minimum element from a list------------
+(defun minElement (l min)
+    (cond
+        ((null l) min)
+        ((not (numberp (car l))) (minElement (cdr l) min))
+        ((< (car l) min) (minElement (cdr l) (car l)))
+        (t (minElement (cdr l) min))
+        )
+    )
+
+(print (minElement '(2 1 3 1 5 2) 100))
+
+----------------------------------------------------------------------------------------------
+---- sa se stearga toate secventele de valori numerice NEconsecutive crescatoare------
+
+(defun deleteValoriNeconsecutive (l e k n)   ;l=lista, e=last element, k=valori crescatoare si consecutive , n=valoare neconsecutiva
+    (cond
+        ((null l) nil)
+        ((null e) (cons (car l) (deleteValoriNeconsecutive (cdr l) (car l) k n)))
+        ((and (numberp (car l))(< e (car l)) (equal n 0)) (cons(car l) (deleteValoriNeconsecutive (cdr l) (car l) 0 0)))
+        ((and (numberp (car l))(>= e (car l))) (cons(car l) (deleteValoriNeconsecutive (cdr l) (car l) 1 0)))
+        ((not (numberp (car l)))(cons (car l)(deleteValoriNeconsecutive (cdr l) e k 1)))
+        ((and (< e (car l)) (equal k 0) (equal n 1))(deleteValoriNeconsecutive(cdr l) (car l) 0 0))
+        )
+    )
+
+(print (deleteValoriNeconsecutive '(1 2 c 4  6 7 8 i 10 j) 0 0 0))
+
+
+
+
+----------------------reverse a list----------------------
+(defun reverseList(l)
+    (cond
+        ((null l) nil)
+	((listp (car l))(append(reverseList (cdr l))(reverseList (car l))))
+        (t (append (reverseList(cdr l)) (list(car l))))
+        )
+    )
+
+(print (reverseList '(1 2 c 4  6 7 8 i 10 )))
+
+
+
+-----------------sum of a list-------------------------
+( defun sumList (l)
+    (cond
+        ((null l) 0)
+        ((numberp (car l)) (+ (car l) (sumList (cdr l))))
+        ((atom (car l)) (sumList(cdr l)))
+        ((listp(car l)) (+(sumList(car l)) (sumList(cdr l))))
+        )
+    )
+
+(print (sumList '(1 (2 3)  d (4) a v) ))

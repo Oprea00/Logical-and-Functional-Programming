@@ -1,0 +1,31 @@
+%b. Write a predicate to add a value v after 1-st, 2-nd, 4-th, 8-th, … element in a list.
+%check if a number is a power of 2
+%          {true,  x=1
+%power2(x)={false, x mod 2=1
+%          {power2(x/2), x mod 2=0
+
+%power2(Position:int)
+%(i)
+
+power2(1).
+power2(Position):-mod(Position,2)=:=1,Position1 is Position/2,power2(Position1).
+
+
+%                        {[],    n=0
+% addValue(l1..ln,v,pos)={l1 U v U addValue(l2..ln,v,pos+1),power2(pos)=true
+%                        {l1 U addValue(l2..ln,v,pos+1) ,
+%                        power2(pos)=false
+
+%addValue(L:list,Value:element,Position:int,R:list)
+%(i,i,i,o)
+%at input the position needs to be 1
+
+addValue([],_,_,[]).
+addValue([H|L],Value,Position,R):-power2(Position),Position1 is Position+1,addValue(L,Value,Position1,R1),R2=[Value|R1],R=[H|R2].
+addValue([H|L],Value,Position,R):-Position1 is Position+1,addValue(L,Value,Position1,R1),R=[H|R1].
+
+
+%main(L:list,Value:element,R:list)
+%(i,i,o)
+main(L,Value,R):-addValue(L,Value,1,R).
+

@@ -1,0 +1,15 @@
+;replaceE(l1..ln,L1,e)={[] , n=0
+;		       {L1 U replaceE(l2..ln,L1,e) ,l1=e
+;                      {replaceE(l1,L1,e) U replaceE(l2..ln,L1,e) ,l1 is a list
+;                      {l1 U replaceE(l2..ln,L1,e) ,l1!=e 			
+
+(defun replaceE (l l1 e)
+    (cond
+        ((null l) nil)
+        ((equal (car l) e) (append l1 (replaceE(cdr l) l1 e)))
+        ((listp (car l)) (cons(replaceE(car l) l1 e)(replaceE(cdr l) l1 e)))
+        (t (cons (car l)(replaceE(cdr l) l1 e)))
+        )
+    )
+
+(print (replaceE '(5 6 7 (7 7 10) ((7) 1)) '(1 2) 7))

@@ -1,0 +1,20 @@
+;Write a function to determine the number of nodes on the level k from a n-tree represented as ;follows:
+;(root list_nodes_subtree1 ... list_nodes_subtreen) 
+
+;				        {1 ,tree=atom and currentLevel=kLevel
+;countOnLevel(tree,currentLevel,kLevel)={0 ,tree=atom and currentLevel!=kLevel
+;				        {countOnLevel(tree1,currentLevel+1,kLevel)U 		;U countOnLevel(tree2,currentLevel+1,kLevel) U...U countOnLevel(treeN,currentLevel+1,kLevel)
+
+
+(defun countOnLevel (tree currentLevel kLevel)
+    (cond
+        ((and (atom tree) (equal currentLevel kLevel)) 1)
+        ((atom tree) 0)
+        (t (apply '+(mapcar #'(lambda (a) (countOnLevel a (+ 1 currentLevel) kLevel)) tree)))
+        )
+    )
+
+(defun main (tree k) (countOnLevel tree 0 k))
+
+(print (main '(a (b (c)) (d) (e (f))) 2 ))
+(print (main ' (A (B (D(G) (H)) (E (I))) (C (F (J (L)) (K)))) 4))
